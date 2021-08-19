@@ -1,0 +1,25 @@
+{
+    "name": "karan",
+    "age": 22,
+    "address": "dumri",
+    "contactNo": 1234567890,
+    "schoolAddress": [
+        {
+            "schoolName": "dav",
+            "principal": "rohit",
+            "schoolCode": 123,
+            "teachersName": [
+                {
+                    "mathTeacher": "aman",
+                    "hindiTeacher": "soni",
+                    "mathTeacher2": "aman",
+                    "hindiTeacher3": "soni",
+                    "mathTeacher4": "aman",
+                    "hindiTeacher5": "soni"
+                }
+            ]
+        }
+    ]
+}
+
+
