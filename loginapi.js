@@ -15,21 +15,21 @@ app.use(express.json())
 //---------------------------------------------------------------------------------------
 // config for your database
 const config = {
-    user: 'sa',
-    password: 'karan',
-    server: 'DESKTOP-N694TOB',
-    database: 'Resto',
-    trustServerCertificate: true,
-    'options.encrypt': false
-}
-//---------------------------------------------------------------------------------------
-app.get('/api/login', function (req, res) {
-    sql.connect(config, function (err) {
+        user: 'sa',
+        password: 'karan',
+        server: 'DESKTOP-N694TOB',
+        database: 'Resto',
+        trustServerCertificate: true,
+        'options.encrypt': false
+    }
+    //---------------------------------------------------------------------------------------
+app.get('/api/login', function(req, res) {
+    sql.connect(config, function(err) {
         if (err) {
             console.log(err);
         } else {
             var request = new sql.Request();
-            request.query('select * from userslogin', function (err, recordset) {
+            request.query('select * from userslogin', function(err, recordset) {
                 // request.query('sp_get_login', function (err, recordset) {
 
                 if (err) console.log(err)
@@ -40,9 +40,9 @@ app.get('/api/login', function (req, res) {
 });
 //---------------------------------------------------------------------------------------
 // create json file in node js
-app.post('/api/login/write', function (req, res) {
+app.post('/api/login/write', function(req, res) {
 
-    sql.connect(config, function (err) {
+    sql.connect(config, function(err) {
 
         const bioData = {
             name: "karan",
@@ -84,7 +84,7 @@ app.post('/api/login/write', function (req, res) {
 });
 //---------------------------------------------------------------------------------------
 //rest api to create a new record into mysql database
-app.post('/api/login', function (req, res) {
+app.post('/api/login', function(req, res) {
 
     console.log(req.body);
     //store procedure say connection kay liya
@@ -92,17 +92,16 @@ app.post('/api/login', function (req, res) {
     var Password = req.body.Password;
 
 
-    sql.connect(config, function () {
+    sql.connect(config, function() {
         var request = new sql.Request();
         var myQuery =
             "INSERT INTO userslogin (Email,Password) values('" + req.body.Email + "','" + req.body.Password + "')";
         // "exec sp_add_login  @Email='" + Email + "', @Password='" + Password + "';";
-        request.query(myQuery, function (err, result) {
+        request.query(myQuery, function(err, result) {
             if (err) {
                 console.log("Error al correr query en la base :- " + err);
                 res.send(err);
-            }
-            else {
+            } else {
                 res.write("Data insert successfully.");
                 res.send();
             }
@@ -112,10 +111,10 @@ app.post('/api/login', function (req, res) {
 //---------------------------------------------------------------------------------------
 // Update user with id
 
-app.put('/api/login', function (req, res) {
+app.put('/api/login', function(req, res) {
 
     // console.log(req.body);
-    var tableName="userslogin";
+    var tableName = "userslogin";
 
     var Id = req.body.Id;
     var Email = req.body.Email;
@@ -124,13 +123,12 @@ app.put('/api/login', function (req, res) {
 
     if (!Id && !Email && !Password) {
         return res.status(400).send({ err: user, message: 'Please provide full information.' });
-    }
-    else {
-        sql.connect(config, function () {
+    } else {
+        sql.connect(config, function() {
             var request = new sql.Request();
             var myNewQuery = `UPDATE ${tableName} SET Email ='${Email}',Password='${Password}' where Id = ${Id};`;
-            
-            request.query(myNewQuery, function (error, results, fields) {
+
+            request.query(myNewQuery, function(error, results, fields) {
                 if (error) {
                     throw error;
                 } else {
@@ -145,7 +143,7 @@ app.put('/api/login', function (req, res) {
 //---------------------------------------------------------------------------------------
 //  Delete user
 
-app.delete('/api/login', function (req, res) {
+app.delete('/api/login', function(req, res) {
 
     // console.log(req.body);
 
@@ -154,10 +152,10 @@ app.delete('/api/login', function (req, res) {
     if (!Id) {
         return res.status(400).send({ error: true, message: 'Please provide id.' });
     } else {
-        sql.connect(config, function () {
+        sql.connect(config, function() {
             var request = new sql.Request();
             var query = `DELETE FROM userslogin where Id=${Id}`;
-            request.query(query, function (error, response, fields) {
+            request.query(query, function(error, response, fields) {
                 if (error) throw error;
                 return res.send({ error: false, data: response, message: 'Users has been deleted.' });
             });
@@ -171,8 +169,6 @@ app.delete('/api/login', function (req, res) {
 
 //---------------------------------------------------------------------------------------
 
-var server = app.listen(4000, function () {
+var server = app.listen(4000, function() {
     console.log('Server is running..');
 });
-
-
